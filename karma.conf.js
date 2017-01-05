@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Thu Jan 05 2017 16:42:34 GMT-0500 (EST)
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -14,20 +14,21 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
+    // We only list the entry point, and requirejs loads what needs loading
     files: [
-      'test-main.js'
+      {pattern: 'src/**/*.js', included: false},
+      {pattern: 'test/**/*.js', included: false},
+      'test/test-main.js'
     ],
 
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-    },
+    preprocessors: {},
 
 
     // test results reporter to use
@@ -66,4 +67,4 @@ module.exports = function(config) {
     // how many browser should be started simultaneous
     concurrency: Infinity
   })
-}
+};
