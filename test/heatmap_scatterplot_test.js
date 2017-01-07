@@ -9,14 +9,18 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
 
   describe('heatmap_axes', function () {
     it('works', function () {
-      var div = document.createElement('div');
+      var matrix = [[1,2],[3,4]];
+      matrix.columns = ['a','b'];
       var vis = d3
-          .selectAll('div')
-          .data([[1,2],[3,4]])
+          .selectAll('body')
+          .append('div')
+          .data([matrix])
           .call(internals.heatmap_axes);
-      // TODO:
-      expect(vis.node()).toEqual(null);
-      expect(div.innerHTML).toEqual('');
+
+      expect(vis.size()).toEqual(1);
+      var svg = d3.select('svg');
+      expect(svg.attr('height')).toEqual('50');
+      expect(svg.node().innerHTML).toEqual('<g transform="translate(0,50)"><g text-anchor="end" font-family="sans-serif" font-size="10" fill="none"><g transform="translate(0,0)" opacity="1" class="tick"><text style="transform: rotate(90deg); font-weight: bold; cursor: default;" dy="0em" x="0.5" y="-9" fill="#000">b</text></g></g></g>');
     });
   });
 });
