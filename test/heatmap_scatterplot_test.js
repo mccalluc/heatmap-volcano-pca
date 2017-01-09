@@ -7,6 +7,19 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
       d3.selectAll('body *').remove()
     });
 
+    function context(vis) {
+      var node = vis.select('canvas').node();
+      return node.getContext('2d')
+    }
+
+    function canvas(vis) {
+      return context(vis).canvas;
+    }
+
+    function pixel(vis, x, y) {
+      return Array.from(context(vis).getImageData(x, y, 1, 1).data);
+    }
+
     describe('matrix_extent', function () {
       it('works', function () {
         matrix = [
@@ -79,19 +92,6 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
       });
 
       describe('heatmap_body', function () {
-        function context(vis) {
-          var node = vis.select('canvas').node();
-          return node.getContext('2d')
-        }
-
-        function canvas(vis) {
-          return context(vis).canvas;
-        }
-
-        function pixel(vis, x, y) {
-          return Array.from(context(vis).getImageData(x, y, 1, 1).data);
-        }
-
         it('colors canvas from blue to red', function () {
           var matrix = [{id: 42, neg: -1, zero: 0, pos: 2}];
           matrix.columns = ['id', 'neg', 'zero', 'pos'];
@@ -156,7 +156,40 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
 
       });
       describe('scatterplot_body', function () {
-//TODO
+        it('plot one point at 50% alpha', function () {
+          var matrix = [{id: 42, a: 1, b: 1}];
+          matrix.columns = ['id', 'a', 'b'];
+          var vis = d3
+              .select('body')
+              .data([matrix])
+              .call(internals.scatterplot_body);
+
+          expect(vis.size()).toEqual(1);
+
+          expect(canvas(vis).width).toEqual(301);
+          expect(canvas(vis).height).toEqual(301);
+
+          expect(pixel(vis, 0, 0)).toEqual([0, 0, 0, 0]); // default, initial value
+          expect(pixel(vis, 0, 300)).toEqual([0, 0, 0, 256 - 256 / 2]);
+        });
+
+        it('gets darker with overplots', function () {
+          var matrix = [
+            {id: 42, a: 1, b: 1},
+            {id: 43, a: 1, b: 1},
+            {id: 44, a: 1, b: 1}
+          ];
+          matrix.columns = ['id', 'a', 'b'];
+          var vis = d3
+              .select('body')
+              .data([matrix])
+              .call(internals.scatterplot_body);
+
+          expect(pixel(vis, 0, 0)).toEqual([0, 0, 0, 0]);
+          expect(pixel(vis, 0, 300)).toEqual([0, 0, 0, 256 - 256 / 2 / 2 / 2]);
+          // gets darker with each overplot
+        });
+
       });
 
     })

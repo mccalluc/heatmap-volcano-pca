@@ -239,8 +239,8 @@ define(['d3'],
           selection.each(function (matrix, i) {
             var scales = scatterplot_scales(matrix);
             d3.select(this).append("canvas")
-                .attr("width", chart_width)
-                .attr("height", chart_height)
+                .attr("width", chart_width+1) // We need to include the end points
+                .attr("height", chart_height+1) // of each range
                 .style("position", "relative")
                 .style("left", gutter_width + "px")
                 .style("top", header_height + "px")
