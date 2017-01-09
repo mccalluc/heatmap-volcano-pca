@@ -48,8 +48,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
           var matrix = ['not used here'];
           matrix.columns = ['id', 'col-1'];
           var vis = d3
-              .selectAll('body')
-              .append('div')
+              .select('body')
               .data([matrix])
               .call(internals.heatmap_axes);
 
@@ -63,8 +62,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
           var matrix = ['not used here'];
           matrix.columns = ['id', 'col-1', 'col-2', 'col-3', 'col-4'];
           var vis = d3
-              .selectAll('body')
-              .append('div')
+              .select('body')
               .data([matrix])
               .call(internals.heatmap_axes);
 
@@ -98,8 +96,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
           var matrix = [{id: 42, neg: -1, zero: 0, pos: 2}];
           matrix.columns = ['id', 'neg', 'zero', 'pos'];
           var vis = d3
-              .selectAll('body')
-              .append('div')
+              .select('body')
               .data([matrix])
               .call(internals.heatmap_body);
 
