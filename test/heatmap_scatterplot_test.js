@@ -19,6 +19,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
     function pixel(vis, x, y) {
       return Array.from(context(vis).getImageData(x, y, 1, 1).data);
     }
+    
 
     describe('matrix_extent', function () {
       it('works', function () {
@@ -189,11 +190,40 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
           expect(pixel(vis, 0, 300)).toEqual([0, 0, 0, 256 - 256 / 2 / 2 / 2]);
           // gets darker with each overplot
         });
+      });
+    });
 
+    describe('combined', function () {
+      it('draws both', function (done) {
+        var matrix = [{id: 42, a: 0, b: 1, c: 2}];
+        matrix.columns = ['id', 'a', 'b', 'c'];
+        var vis = d3
+            .select('body')
+            .data([matrix])
+            .call(chart());
+
+        expect(vis.size()).toEqual(1);
+        expect(vis.selectAll('svg').size()).toEqual(2);
+        expect(vis.selectAll('canvas').size()).toEqual(2);
+
+        var title = vis.selectAll('title');
+        setTimeout(function () {
+          // TODO: I want to see the selected column change.
+          console.log(vis.select('svg').node().innerHTML);
+          done();
+        }, 1000);
+        title.on('click');
+      });
+      describe('interaction', function () {
+        describe('on heatmap', function () {
+          // TODO
+        });
+        describe('on scatterplot', function () {
+          // TODO
+        });
       });
 
-    })
+    });
 
   });
-
 });
