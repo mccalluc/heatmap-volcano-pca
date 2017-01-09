@@ -19,7 +19,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
     function pixel(vis, x, y) {
       return Array.from(context(vis).getImageData(x, y, 1, 1).data);
     }
-    
+
 
     describe('matrix_extent', function () {
       it('works', function () {
