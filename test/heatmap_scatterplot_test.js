@@ -48,9 +48,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
             .call(internals.heatmap_axes);
 
         expect(vis.size()).toEqual(1);
-        var svg = d3.select('svg');
-        expect(svg.attr('height')).toEqual('50');
-        expect(svg.node().innerHTML).toEqual(
+        expect(vis.select('svg').node().innerHTML).toEqual(
             gg(translate(0, default_text('col-1')))
         );
       });
@@ -65,9 +63,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
             .call(internals.heatmap_axes);
 
         expect(vis.size()).toEqual(1);
-        var svg = d3.select('svg');
-        expect(svg.attr('height')).toEqual('50');
-        expect(svg.node().innerHTML).toEqual(
+        expect(vis.select('svg').node().innerHTML).toEqual(
             gg(
                 translate(0, default_text('col-1'))
                 + translate(75, default_text('col-2'))
@@ -77,6 +73,30 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
         );
       });
     });
+
+    describe('heatmap_body', function () {
+      function pixel(vis, x, y) {
+        var node = vis.select('canvas').node();
+        var context = node.getContext('2d');
+        return Array.from(context.getImageData(x, y, 1, 1).data);
+      }
+
+      it('colors canvas correctly', function () {
+        var matrix = [['id', -1, 0, 1]];
+        matrix.columns = ['id', 'neg', 'zero', 'pos'];
+        var vis = d3
+            .selectAll('body')
+            .append('div')
+            .data([matrix])
+            .call(internals.heatmap_body);
+
+        expect(vis.size()).toEqual(1);
+
+        expect(pixel(vis, 0, 0)).toEqual([255, 0, 0, 255]);
+        expect(pixel(vis, 1, 0)).toEqual([255, 0, 0, 255]); // TODO: not right
+        expect(pixel(vis, 2, 0)).toEqual([255, 0, 0, 255]);
+      });
+    })
   });
 
 });
