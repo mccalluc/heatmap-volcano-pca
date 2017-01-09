@@ -9,7 +9,12 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
 
     describe('matrix_extent', function () {
       it('works', function () {
-        expect(internals.matrix_extent([[-1, 0], [0, 1]])).toEqual([-1, 1]);
+        matrix = [
+          {id: 'foo', a: '-1', b: '0'},
+          {id: '42', a: '0', b: '1'}
+        ];
+        matrix.columns = ['id', 'a', 'b'];
+        expect(internals.matrix_extent(matrix)).toEqual([-1, 1]);
       });
     });
 
@@ -89,7 +94,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
       }
 
       it('colors canvas correctly', function () {
-        var matrix = [{id: 0, neg: -1, zero: 0, pos:1}];
+        var matrix = [{id: 42, neg: -1, zero: 0, pos: 1}];
         matrix.columns = ['id', 'neg', 'zero', 'pos'];
         var vis = d3
             .selectAll('body')
@@ -103,7 +108,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
         expect(canvas(vis).height).toEqual(1);
 
         expect(pixel(vis, 0, 0)).toEqual([0, 0, 255, 255]); // blue
-        expect(pixel(vis, 1, 0)).toEqual([255, 255, 255, 255]); // white?
+        expect(pixel(vis, 1, 0)).toEqual([255, 255, 255, 255]); // white
         expect(pixel(vis, 2, 0)).toEqual([255, 0, 0, 255]); // red
       });
     })
