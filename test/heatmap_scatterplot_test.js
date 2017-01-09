@@ -54,7 +54,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
       });
 
       it('works for 3 column realistic case', function () {
-        var matrix = [[0, 1, 2, 3]];
+        var matrix = ['not used by this method'];
         matrix.columns = ['id', 'col-1', 'col-2', 'col-3', 'col-4'];
         var vis = d3
             .selectAll('body')
@@ -75,14 +75,21 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
     });
 
     describe('heatmap_body', function () {
-      function pixel(vis, x, y) {
+      function context(vis) {
         var node = vis.select('canvas').node();
-        var context = node.getContext('2d');
-        return Array.from(context.getImageData(x, y, 1, 1).data);
+        return node.getContext('2d')
+      }
+
+      function canvas(vis) {
+        return context(vis).canvas;
+      }
+
+      function pixel(vis, x, y) {
+        return Array.from(context(vis).getImageData(x, y, 1, 1).data);
       }
 
       it('colors canvas correctly', function () {
-        var matrix = [['id', -1, 0, 1]];
+        var matrix = [{id: 0, neg: -1, zero: 0, pos:1}];
         matrix.columns = ['id', 'neg', 'zero', 'pos'];
         var vis = d3
             .selectAll('body')
@@ -92,9 +99,12 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
 
         expect(vis.size()).toEqual(1);
 
-        expect(pixel(vis, 0, 0)).toEqual([255, 0, 0, 255]);
-        expect(pixel(vis, 1, 0)).toEqual([255, 0, 0, 255]); // TODO: not right
-        expect(pixel(vis, 2, 0)).toEqual([255, 0, 0, 255]);
+        expect(canvas(vis).width).toEqual(3);
+        expect(canvas(vis).height).toEqual(1);
+
+        expect(pixel(vis, 0, 0)).toEqual([0, 0, 255, 255]); // blue
+        expect(pixel(vis, 1, 0)).toEqual([255, 255, 255, 255]); // white?
+        expect(pixel(vis, 2, 0)).toEqual([255, 0, 0, 255]); // red
       });
     })
   });
