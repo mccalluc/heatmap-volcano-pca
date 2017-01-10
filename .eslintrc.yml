@@ -1,5 +1,7 @@
 env:
   browser: true
+  jasmine: true
+  amd: true
 extends: 'eslint:recommended'
 rules:
   accessor-pairs: error
