@@ -23,7 +23,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
 
     describe('matrix_extent', function () {
       it('works', function () {
-        matrix = [
+        var matrix = [
           {id: 'foo', a: '-1', b: '0'}, // eslint-disable-line object-property-newline
           {id: '42', a: '0', b: '1'} // eslint-disable-line object-property-newline
         ];
@@ -116,8 +116,8 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
     describe('scatterplot', function () {
       describe('scatterplot_axes', function () {
         function handle(a, b) {
-          return '<rect style="display: none;" cursor="' + a + '-resize" ' +
-              'class="handle handle--' + b + '"></rect>';
+          return '<rect style="display: none;" cursor="' + a + '-resize" '
+              + 'class="handle handle--' + b + '"></rect>';
         }
 
         it('works', function () {
@@ -160,7 +160,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
       });
       describe('scatterplot_body', function () {
         it('plot one point at 50% alpha', function () {
-          var matrix = [{id: 42, a: 1, b: 1}]; // eslint-disable object-property-newline
+          var matrix = [{id: 42, a: 1, b: 1}]; // eslint-disable-line object-property-newline
           matrix.columns = ['id', 'a', 'b'];
           var vis = d3
               .select('body')
@@ -203,7 +203,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
     });
 
     describe('combined', function () {
-      var vis;
+      var vis = null;
 
       beforeEach(function () {
         var matrix = [{id: 42, a: 0, b: 1, c: 2}]; // eslint-disable-line object-property-newline

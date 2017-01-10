@@ -24,9 +24,8 @@ define([],
               obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
             }
           }
-        }
-        else if (xml.nodeType == 4) { // cdata section
-          obj = xml.nodeValue
+        } else if (xml.nodeType == 4) { // cdata section
+          obj = xml.nodeValue;
         }
 
         // do children
