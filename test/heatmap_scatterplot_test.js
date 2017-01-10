@@ -194,7 +194,7 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
     });
 
     describe('combined', function () {
-      it('draws both', function (done) {
+      it('draws both', function () {
         var matrix = [{id: 42, a: 0, b: 1, c: 2}];
         matrix.columns = ['id', 'a', 'b', 'c'];
         var vis = d3
@@ -206,13 +206,13 @@ define(['heatmap_scatterplot', 'd3'], function (chart, d3) {
         expect(vis.selectAll('svg').size()).toEqual(2);
         expect(vis.selectAll('canvas').size()).toEqual(2);
 
-        var title = vis.selectAll('title');
-        setTimeout(function () {
-          // TODO: I want to see the selected column change.
-          console.log(vis.select('svg').node().innerHTML);
-          done();
-        }, 1000);
-        title.on('click');
+        // var title = vis.selectAll('title');
+        // setTimeout(function () {
+        //   // TODO: I want to see the selected column change.
+        //   console.log(vis.select('svg').node().innerHTML);
+        //   done();
+        // }, 1000);
+        // title.on('click');
       });
       describe('interaction', function () {
         describe('on heatmap', function () {
