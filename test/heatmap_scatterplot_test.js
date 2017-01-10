@@ -24,8 +24,8 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
     describe('matrix_extent', function () {
       it('works', function () {
         matrix = [
-          {id: 'foo', a: '-1', b: '0'},
-          {id: '42', a: '0', b: '1'}
+          {id: 'foo', a: '-1', b: '0'}, // eslint-disable-line object-property-newline
+          {id: '42', a: '0', b: '1'} // eslint-disable-line object-property-newline
         ];
         matrix.columns = ['id', 'a', 'b'];
         expect(internals.matrix_extent(matrix)).toEqual([-1, 1]);
@@ -94,7 +94,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
 
       describe('heatmap_body', function () {
         it('colors canvas from blue to red', function () {
-          var matrix = [{id: 42, neg: -1, zero: 0, pos: 2}];
+          var matrix = [{id: 42, neg: -1, zero: 0, pos: 2}]; // eslint-disable-line object-property-newline
           matrix.columns = ['id', 'neg', 'zero', 'pos'];
           var vis = d3
               .select('body')
@@ -121,7 +121,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
         }
 
         it('works', function () {
-          var matrix = [{id: 42, neg: -1, zero: 0, pos: 2}];
+          var matrix = [{id: 42, neg: -1, zero: 0, pos: 2}]; // eslint-disable-line object-property-newline
           matrix.columns = ['id', 'neg', 'zero', 'pos'];
           var vis = d3
               .selectAll('body')
@@ -160,7 +160,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
       });
       describe('scatterplot_body', function () {
         it('plot one point at 50% alpha', function () {
-          var matrix = [{id: 42, a: 1, b: 1}];
+          var matrix = [{id: 42, a: 1, b: 1}]; // eslint-disable object-property-newline
           matrix.columns = ['id', 'a', 'b'];
           var vis = d3
               .select('body')
@@ -178,9 +178,11 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
 
         it('gets darker with overplots', function () {
           var matrix = [
+            /* eslint-disable object-property-newline */
             {id: 42, a: 1, b: 1},
             {id: 43, a: 1, b: 1},
             {id: 44, a: 1, b: 1}
+            /* eslint-enable */
           ];
           matrix.columns = ['id', 'a', 'b'];
           var vis = d3
@@ -204,7 +206,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
       var vis;
 
       beforeEach(function () {
-        var matrix = [{id: 42, a: 0, b: 1, c: 2}];
+        var matrix = [{id: 42, a: 0, b: 1, c: 2}]; // eslint-disable-line object-property-newline
         matrix.columns = ['id', 'a', 'b', 'c'];
         vis = d3
             .select('body')
