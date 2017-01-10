@@ -34,15 +34,15 @@ define([],
           for (var i = 0; i < xml.childNodes.length; i++) {
             var item = xml.childNodes.item(i);
             var nodeName = item.nodeName;
-            if (typeof(obj[nodeName]) == "undefined") {
+            if (typeof obj[nodeName] == "undefined") {
               obj[nodeName] = xml_node_to_json(item);
             } else {
-              if (typeof(obj[nodeName].length) == "undefined") {
+              if (typeof obj[nodeName].length == "undefined") {
                 var old = obj[nodeName];
                 obj[nodeName] = [];
                 obj[nodeName].push(old);
               }
-              if (typeof(obj[nodeName]) === 'object') {
+              if (typeof obj[nodeName] === 'object') {
                 obj[nodeName].push(xml_node_to_json(item));
               }
             }

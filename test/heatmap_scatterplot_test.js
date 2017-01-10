@@ -35,10 +35,10 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
     describe('heatmap', function () {
       describe('heatmap_axes', function () {
         function gg(content) {
-          return '<g transform="translate(0,50)">' +
-              '<g font-family="sans-serif" font-size="10" fill="none" text-anchor="end">' +
-              content +
-              '</g></g>';
+          return '<g transform="translate(0,50)">'
+              + '<g font-family="sans-serif" font-size="10" fill="none" text-anchor="end">'
+              + content
+              + '</g></g>';
         }
 
         function translate(t, content) {
@@ -46,16 +46,16 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
         }
 
         function default_text(content) {
-          return '<text style="' +
-              'transform: rotate(90deg); font-weight: bold; cursor: default;' +
-              '" dy="0em" x="0.5" y="-9" fill="#000">' + content + '</text>';
+          return '<text style="'
+              + 'transform: rotate(90deg); font-weight: bold; cursor: default;'
+              + '" dy="0em" x="0.5" y="-9" fill="#000">' + content + '</text>';
         }
 
         function pointer_text(content) {
-          return '<text style="' +
-              'transform: rotate(90deg); cursor: pointer;' +
-              '" dy="0em" x="0.5" y="-9" fill="#000">' + content +
-              '<title>alt-click to change x-axis</title></text>';
+          return '<text style="'
+              + 'transform: rotate(90deg); cursor: pointer;'
+              + '" dy="0em" x="0.5" y="-9" fill="#000">' + content
+              + '<title>alt-click to change x-axis</title></text>';
         }
 
         it('works for 1 column degenerate case', function () {
@@ -132,27 +132,27 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
           expect(vis.size()).toEqual(1);
           expect(utils.xml_node_to_json(vis.select('svg').node())).toEqual(
               utils.xml_string_to_json(
-                  '<g transform="translate(50,50)">' +
-                  '<g text-anchor="middle" font-family="sans-serif" font-size="10" fill="none" transform="translate(0,300)">' +
-                  '<path d="M0.5,6V0.5H300.5V6" stroke="#000" class="domain">' +
-                  '</path></g>' +
-                  '<g text-anchor="end" font-family="sans-serif" font-size="10" fill="none">' +
-                  '<path d="M-6,300.5H0.5V0.5H-6" stroke="#000" class="domain">' +
-                  '</path></g>' +
-                  '<text style="text-anchor: middle; cursor: default;" transform="translate(150,337.5)">neg</text>' +
-                  '<text style="text-anchor: middle; cursor: default;" transform="translate(-37.5,150) rotate(90)">zero</text>' +
-                  '<g pointer-events="all" fill="none" class="brush">' +
-                  '<rect height="300" width="300" y="0" x="0" cursor="crosshair" pointer-events="all" class="overlay"></rect>' +
-                  '<rect style="display: none;" shape-rendering="crispEdges" stroke="#fff" fill-opacity="0.3" fill="#777" cursor="move" class="selection"></rect>' +
-                  handle('ns', 'n') +
-                  handle('ew', 'e') +
-                  handle('ns', 's') +
-                  handle('ew', 'w') +
-                  handle('nwse', 'nw') +
-                  handle('nesw', 'ne') +
-                  handle('nwse', 'se') +
-                  handle('nesw', 'sw') +
-                  '</g></g>'
+                  '<g transform="translate(50,50)">'
+                  + '<g text-anchor="middle" font-family="sans-serif" font-size="10" fill="none" transform="translate(0,300)">'
+                  + '<path d="M0.5,6V0.5H300.5V6" stroke="#000" class="domain">'
+                  + '</path></g>'
+                  + '<g text-anchor="end" font-family="sans-serif" font-size="10" fill="none">'
+                  + '<path d="M-6,300.5H0.5V0.5H-6" stroke="#000" class="domain">'
+                  + '</path></g>'
+                  + '<text style="text-anchor: middle; cursor: default;" transform="translate(150,337.5)">neg</text>'
+                  + '<text style="text-anchor: middle; cursor: default;" transform="translate(-37.5,150) rotate(90)">zero</text>'
+                  + '<g pointer-events="all" fill="none" class="brush">'
+                  + '<rect height="300" width="300" y="0" x="0" cursor="crosshair" pointer-events="all" class="overlay"></rect>'
+                  + '<rect style="display: none;" shape-rendering="crispEdges" stroke="#fff" fill-opacity="0.3" fill="#777" cursor="move" class="selection"></rect>'
+                  + handle('ns', 'n')
+                  + handle('ew', 'e')
+                  + handle('ns', 's')
+                  + handle('ew', 'w')
+                  + handle('nwse', 'nw')
+                  + handle('nesw', 'ne')
+                  + handle('nwse', 'se')
+                  + handle('nesw', 'sw')
+                  + '</g></g>'
               )
           );
         });
@@ -218,13 +218,15 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
         expect(vis.selectAll('canvas').size()).toEqual(2);
       });
 
-      it('handles heatmap header click', function() {
+      it('handles heatmap header click', function () {
         function clickable_header() {
           return vis.selectAll('title').node().parentNode;
         }
+
         function y_axis_label() {
           return document.querySelectorAll('text')[4].textContent;
         }
+
         function x_axis_label() {
           return document.querySelectorAll('text')[3].textContent;
         }
@@ -238,7 +240,7 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
 
         // Before and after, clickable header != x axis != y axis
         header = clickable_header();
-        expect(header.textContent.slice(0,1)).toEqual('b');
+        expect(header.textContent.slice(0, 1)).toEqual('b');
         expect(x_axis_label()).toEqual('a');
         expect(y_axis_label()).toEqual('c');
       });
