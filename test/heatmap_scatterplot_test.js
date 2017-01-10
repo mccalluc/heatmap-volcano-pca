@@ -172,8 +172,8 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
           expect(canvas(vis).width).toEqual(301);
           expect(canvas(vis).height).toEqual(301);
 
-          expect(pixel(vis, 0, 0)).toEqual([0, 0, 0, 0]); // default, initial value
-          expect(pixel(vis, 0, 300)).toEqual([0, 0, 0, 256 - 256 / 2]);
+          expect(pixel(vis, 0, 0)[3]).toEqual(0); // default, initial value
+          expect(pixel(vis, 0, 300)[3]).toEqual(256 - 256 / 2);
         });
 
         it('gets darker with overplots', function () {
@@ -188,9 +188,14 @@ define(['heatmap_scatterplot', 'd3', '../test/utils'], function (chart, d3, util
               .data([matrix])
               .call(internals.scatterplot_body);
 
-          expect(pixel(vis, 0, 0)).toEqual([0, 0, 0, 0]);
-          expect(pixel(vis, 0, 300)).toEqual([0, 0, 0, 256 - 256 / 2 / 2 / 2]);
+          expect(pixel(vis, 0, 0)[3]).toEqual(0);
+          var darker = pixel(vis, 0, 300)[3];
+          var ceil = 256 - 256 / 2 / 2 / 2;
+          var floor = ceil - 2;
+          expect(darker).toBeLessThanOrEqual(ceil);
+          expect(darker).toBeGreaterThanOrEqual(floor);
           // gets darker with each overplot
+          // exact behavior inconsistent between browsers
         });
       });
     });
