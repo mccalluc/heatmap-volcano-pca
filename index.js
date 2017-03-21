@@ -33,15 +33,25 @@
   });
 
   require(['heatmap_scatterplot', 'd3'], function (heatmap_scatterplot, d3) {
-    var matrix = [
-      [1, 1, 0, 0, 0],
-      [2, 0, 1, 0, 0],
-      [3, 0, 0, 1, 0],
-      [4, 0, 0, 0, 1]
-    ];
-    matrix.columns = ['id', 'A', 'B', 'C', 'D'];
-    d3.select('#container')
-      .data([matrix])
-      .call(heatmap_scatterplot());
+    // In a real application, you would provide the url for your data,
+    // instead of creating it on-the-fly.
+    var matrix = [['gene', 'cond-a', 'cond-b', 'cond-c', 'cond-d']];
+    for (var i = 0; i < 40000; ++i) {
+      var a = Math.asin((Math.random() - 0.5) * 2);
+      var b = Math.asin((Math.random() - 0.5) * 2);
+      var c = 0.5 * a + b + 0.1 * (Math.random() - 0.5);
+      var d = a + 0.5 * b + 0.1 * (Math.random() - 0.5);
+      matrix.push(["gene-" + i, a, b, c, d]);
+    }
+    var data_uri = "data:text/tab-separated-values," + encodeURIComponent(
+      matrix.map(function (row) {
+        return row.join("\t")
+    }).join("\n"));
+    d3.tsv(data_uri, function (error, matrix) {
+      if (error) throw error;
+      d3.select('#container')
+          .data([matrix])
+          .call(heatmap_scatterplot());
+    });
   });
 })();
