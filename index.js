@@ -32,7 +32,16 @@
     "d3": "https://cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3.min"
   });
 
-  require(['heatmap_scatterplot', 'd3'], function () {
-    alert('here?');
+  require(['heatmap_scatterplot', 'd3'], function (heatmap_scatterplot, d3) {
+    var matrix = [
+      [1, 1, 0, 0, 0],
+      [2, 0, 1, 0, 0],
+      [3, 0, 0, 1, 0],
+      [4, 0, 0, 0, 1]
+    ];
+    matrix.columns = ['id', 'A', 'B', 'C', 'D'];
+    d3.select('#container')
+      .data([matrix])
+      .call(heatmap_scatterplot());
   });
 })();
